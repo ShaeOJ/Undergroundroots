@@ -25,6 +25,7 @@
         <ul class="nav-links">
             <li><a href="#field-notes">Field Notes</a></li>
             <li><a href="#workshop">Workshop</a></li>
+            <li><a href="#craft">The Craft</a></li>
             <li><a href="#stack">The Stack</a></li>
             <li><a href="#compost">About</a></li>
         </ul>
@@ -34,15 +35,15 @@
     <section id="hero">
         <div class="container">
             <div class="hero-content">
-                <div class="hero-eyebrow">Grassroots Technology</div>
+                <div class="hero-eyebrow">Grassroots Technology &amp; Design</div>
                 <h1 class="hero-title">
                     Tech from<br>
                     <em>the ground up.</em>
                 </h1>
                 <p class="hero-sub">
-                    We build with what exists. We fix what others discard.
-                    We grow tools in sheds, garages, and server rooms
-                    that smell like solder and pine.
+                    Custom firmware. Hand-built infrastructure. Visual interfaces
+                    for hardware that was never supposed to have one.
+                    We build with what exists — and we make it look like it matters.
                 </p>
                 <a href="#idea" class="hero-cta">
                     Read the Manifesto ↓
@@ -67,6 +68,7 @@
                         <li>Open before closed</li>
                         <li>Local before cloud</li>
                         <li>Understand before use</li>
+                        <li>Design is not decoration</li>
                         <li>Share what you grow</li>
                     </ul>
                 </div>
@@ -87,6 +89,12 @@
                             We believe in the <strong>mycelium model</strong> — a distributed network with
                             no single point of failure, where knowledge travels freely between
                             nodes, and where every organism benefits the whole.
+                        </p>
+                        <p>
+                            And the work should <strong>look like it was cared about.</strong>
+                            A firmware dashboard on a 320×170 display deserves the same
+                            design attention as a consumer product. An ASIC controller
+                            should have a UI worth staring at while it hashes.
                         </p>
                         <p>
                             You don't need a data centre. You need time, curiosity,
@@ -307,6 +315,85 @@
                     <span class="stack-desc">Raw GLSL in ZombieOS dashboard globe — no library, 4 shader programs</span>
                 </div>
             </div>
+        </div>
+    </section>
+
+    <hr class="ink-divider">
+
+    <!-- ── The Craft ─────────────────────────────────────────── -->
+    <section id="craft">
+        <div class="container">
+            <div class="craft-header reveal">
+                <span class="section-label">The Craft</span>
+                <h2>Every Layer, Designed</h2>
+                <p class="craft-lead">
+                    The work spans firmware, web, desktop, and embedded displays —
+                    but the design thread runs through all of it. From a 128&times;64 OLED
+                    to a full WebGL globe built in raw GLSL, every interface gets the
+                    same care as the hardware underneath it.
+                </p>
+            </div>
+
+            <div class="craft-pillars">
+
+                <div class="craft-pillar reveal">
+                    <div class="craft-pillar-icon">◈</div>
+                    <h3>Embedded UI</h3>
+                    <p>
+                        LVGL on SPI panels. Custom Vault-Tec image themes for NerdAxe
+                        and ClusterAxe displays. Big-endian RGB565 image pipelines.
+                        Interfaces designed for a screen smaller than a business card —
+                        and taken just as seriously.
+                    </p>
+                    <ul class="craft-examples">
+                        <li>NerdQAxe++ custom LVGL theme</li>
+                        <li>ClusterAxe mining screen + EMA charts</li>
+                        <li>CYD wireless BitAxe display</li>
+                    </ul>
+                </div>
+
+                <div class="craft-pillar reveal">
+                    <div class="craft-pillar-icon">◈</div>
+                    <h3>Web &amp; Desktop</h3>
+                    <p>
+                        Full-stack pool dashboards with Pip-Boy config generators.
+                        A six-theme desktop mining app in Svelte and Go. A WebGL globe
+                        with Phong shading, atmosphere rim glow, and live signal arcs —
+                        written without a single graphics library.
+                    </p>
+                    <ul class="craft-examples">
+                        <li>FirePool — Vault-Tec pool dashboard (3 servers)</li>
+                        <li>GoVault — 6-theme desktop app (Wails + Svelte)</li>
+                        <li>ZombieOS — phosphor boot, WebGL globe, autotuner pipeline</li>
+                    </ul>
+                </div>
+
+                <div class="craft-pillar reveal">
+                    <div class="craft-pillar-icon">◈</div>
+                    <h3>IoT + Firmware</h3>
+                    <p>
+                        If it has a chip, it can have a personality. Custom firmware
+                        for Antminer S9 boards, ESP32-S3 cluster nodes, NerdAxe miners,
+                        and anything else with a UART and a power rail. The vendor UI
+                        is always a starting point, never the destination.
+                    </p>
+                    <ul class="craft-examples">
+                        <li>ZombieOS S9 — Braiins OS overlay + full custom web UI</li>
+                        <li>ClusterAxe — ESP-NOW cluster firmware + Angular tuner</li>
+                        <li>NerdAxe_Cluster — master/slave stratum firmware</li>
+                    </ul>
+                </div>
+
+            </div>
+
+            <div class="craft-statement reveal">
+                <blockquote class="craft-quote">
+                    "The interface is not a skin over the machine.
+                    It <em>is</em> the machine, from the user's perspective —
+                    and that perspective deserves to be beautiful."
+                </blockquote>
+            </div>
+
         </div>
     </section>
 

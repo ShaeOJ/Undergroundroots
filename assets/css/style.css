@@ -652,6 +652,149 @@ section {
     line-height: 1.5;
 }
 
+/* ── The Craft ──────────────────────────────────────────── */
+#craft {
+    background: var(--subsoil);
+    border-top: 1px solid var(--root-brown);
+    border-bottom: 1px solid var(--root-brown);
+}
+
+.craft-header {
+    max-width: 680px;
+    margin-bottom: clamp(3rem, 6vw, 5rem);
+}
+
+.craft-lead {
+    font-style: italic;
+    color: var(--slate);
+    font-size: clamp(1rem, 1.8vw, 1.15rem);
+    margin-top: 1rem;
+    line-height: 1.8;
+}
+
+.craft-pillars {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 1.5rem;
+    margin-bottom: clamp(3rem, 6vw, 5rem);
+}
+
+.craft-pillar {
+    background: var(--topsoil);
+    border: 1px solid var(--root-brown);
+    padding: 2rem 1.75rem;
+    position: relative;
+    transition: border-color 0.25s;
+}
+
+.craft-pillar:hover {
+    border-color: var(--bark);
+}
+
+/* top-left corner accent */
+.craft-pillar::before {
+    content: '';
+    position: absolute;
+    top: -1px; left: -1px;
+    width: 28px; height: 28px;
+    border-top: 2px solid var(--bio-dim);
+    border-left: 2px solid var(--bio-dim);
+    opacity: 0;
+    transition: opacity 0.25s;
+}
+
+.craft-pillar:hover::before {
+    opacity: 1;
+}
+
+.craft-pillar-icon {
+    font-size: 1.1rem;
+    color: var(--bio-dim);
+    margin-bottom: 1rem;
+    line-height: 1;
+}
+
+.craft-pillar h3 {
+    font-size: 1.3rem;
+    margin-bottom: 0.9rem;
+    color: var(--mycelium);
+}
+
+.craft-pillar p {
+    font-size: 0.95rem;
+    color: var(--slate);
+    line-height: 1.75;
+    margin-bottom: 1.25rem;
+}
+
+.craft-examples {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 0.45rem;
+    border-top: 1px solid var(--root-brown);
+    padding-top: 1rem;
+}
+
+.craft-examples li {
+    font-family: var(--font-mono);
+    font-size: 0.64rem;
+    letter-spacing: 0.08em;
+    color: var(--bark);
+    display: flex;
+    align-items: baseline;
+    gap: 0.5rem;
+}
+
+.craft-examples li::before {
+    content: '→';
+    color: var(--bio-dim);
+    flex-shrink: 0;
+}
+
+.craft-statement {
+    display: flex;
+    justify-content: center;
+}
+
+.craft-quote {
+    max-width: 640px;
+    text-align: center;
+    font-family: var(--font-head);
+    font-size: clamp(1.1rem, 2.5vw, 1.5rem);
+    color: var(--mycelium);
+    line-height: 1.6;
+    font-style: normal;
+    position: relative;
+    padding: 0 2rem;
+}
+
+.craft-quote em {
+    color: var(--bio-green);
+    font-style: italic;
+}
+
+.craft-quote::before,
+.craft-quote::after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    width: clamp(20px, 6vw, 48px);
+    height: 1px;
+    background: linear-gradient(90deg, transparent, var(--bark));
+    transform: translateY(-50%);
+}
+
+.craft-quote::before {
+    left: 0;
+    background: linear-gradient(90deg, transparent, var(--bark));
+}
+
+.craft-quote::after {
+    right: 0;
+    background: linear-gradient(90deg, var(--bark), transparent);
+}
+
 /* ── Footer ─────────────────────────────────────────────── */
 .site-footer {
     background: var(--subsoil);
