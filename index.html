@@ -114,15 +114,16 @@
             <div class="notes-grid">
 
                 <article class="note-card reveal">
-                    <span class="note-tag">Hardware</span>
-                    <h3 class="note-title">Turning a Dead Laptop into a Low-Power Home Server</h3>
+                    <span class="note-tag">ASIC / Firmware</span>
+                    <h3 class="note-title">ZombieOS — Wringing Every Last Hash from a Retired S9</h3>
                     <p class="note-excerpt">
-                        A 2012 Thinkpad with a cracked screen, 8GB RAM, and a failing battery
-                        found new life as a headless node running four services on 18W idle.
+                        A single-board Antminer S9 with 63 BM1387 chips, a custom Braiins OS
+                        overlay, and per-chip voltage autotuning. Stage&nbsp;4 complete at 7.942&nbsp;V,
+                        29 iterations, 0 slow chips. Then we rebuilt the entire UI from scratch.
                     </p>
                     <div class="note-footer">
                         <span class="note-date">2026-06-01</span>
-                        <a href="#" class="note-read-more">Read →</a>
+                        <a href="https://github.com/ShaeOJ/ZombieOS" class="note-read-more" target="_blank" rel="noopener">Read →</a>
                     </div>
                 </article>
 
@@ -172,32 +173,34 @@
 
                 <div class="reveal">
                     <span class="section-label">Workshop Spotlight</span>
-                    <h2>ClusterAxe</h2>
+                    <h2>ZombieOS</h2>
                     <div class="workshop-meta">
                         <div class="workshop-stat">
-                            <span class="workshop-stat-label">Chip</span>
-                            <span class="workshop-stat-value">BM1370</span>
+                            <span class="workshop-stat-label">Target</span>
+                            <span class="workshop-stat-value">Antminer S9</span>
                         </div>
                         <div class="workshop-stat">
-                            <span class="workshop-stat-label">Board</span>
-                            <span class="workshop-stat-value">ESP32-S3</span>
+                            <span class="workshop-stat-label">Chips</span>
+                            <span class="workshop-stat-value">63 × BM1387</span>
                         </div>
                         <div class="workshop-stat">
-                            <span class="workshop-stat-label">Voltage</span>
-                            <span class="workshop-stat-value">12V</span>
+                            <span class="workshop-stat-label">Tune Voltage</span>
+                            <span class="workshop-stat-value">7.942 V</span>
                         </div>
                         <div class="workshop-stat">
-                            <span class="workshop-stat-label">Nodes</span>
-                            <span class="workshop-stat-value">1 + 8</span>
+                            <span class="workshop-stat-label">Slow Chips</span>
+                            <span class="workshop-stat-value">0 / 63</span>
                         </div>
                     </div>
                     <p class="workshop-desc">
-                        A custom ASIC mining cluster built around the BM1370 chip on a
-                        GT-board form factor. ESP-NOW peer networking, auto-calibrating
-                        frequency ramp, VarDiff tuning, and a Vault-Tec inspired UI.
-                        No vendor firmware. No cloud dependency. Entirely open.
+                        A custom firmware overlay on Braiins OS Legacy for a single-board S9.
+                        Per-chip voltage autotuning across 29 iterations landed at 7.942&nbsp;V
+                        with every chip passing Stage&nbsp;4 verification. Paired with a fully
+                        custom web UI — Vault-Tec themed, WebGL globe, live autotuner
+                        pipeline visualiser, and a bioluminescent glow that pulses when
+                        hashing. No cloud. No vendor lock-in. Just a recycled ASIC doing real work.
                     </p>
-                    <a href="https://github.com/ShaeOJ/ClusterAxe" class="workshop-link" target="_blank" rel="noopener">
+                    <a href="https://github.com/ShaeOJ/Zombie-Braiins-" class="workshop-link" target="_blank" rel="noopener">
                         View on GitHub ↗
                     </a>
                 </div>
