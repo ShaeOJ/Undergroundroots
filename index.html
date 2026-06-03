@@ -1,0 +1,310 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Undergroundroots — Tech from the ground up</title>
+    <meta name="description" content="Grassroots tech, DIY technologies, and organic computing culture. We build with what exists.">
+    <link rel="stylesheet" href="assets/css/style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=Lora:ital,wght@0,400;0,600;1,400&family=Space+Mono:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+</head>
+<body>
+
+<!-- ─────────────────────────────────────────────────────── -->
+<!-- ROOT NETWORK CANVAS (fixed background)                  -->
+<!-- ─────────────────────────────────────────────────────── -->
+<canvas id="root-canvas" aria-hidden="true"></canvas>
+
+<div class="site-wrap">
+
+    <!-- ── Navigation ─────────────────────────────────────── -->
+    <nav class="site-nav" aria-label="Main navigation">
+        <a href="/" class="nav-logo">Under<span>ground</span>roots</a>
+        <ul class="nav-links">
+            <li><a href="#field-notes">Field Notes</a></li>
+            <li><a href="#workshop">Workshop</a></li>
+            <li><a href="#stack">The Stack</a></li>
+            <li><a href="#compost">About</a></li>
+        </ul>
+    </nav>
+
+    <!-- ── Hero ───────────────────────────────────────────── -->
+    <section id="hero">
+        <div class="container">
+            <div class="hero-content">
+                <div class="hero-eyebrow">Grassroots Technology</div>
+                <h1 class="hero-title">
+                    Tech from<br>
+                    <em>the ground up.</em>
+                </h1>
+                <p class="hero-sub">
+                    We build with what exists. We fix what others discard.
+                    We grow tools in sheds, garages, and server rooms
+                    that smell like solder and pine.
+                </p>
+                <a href="#idea" class="hero-cta">
+                    Read the Manifesto ↓
+                </a>
+            </div>
+        </div>
+        <div class="hero-scroll-hint" aria-hidden="true">Scroll</div>
+    </section>
+
+    <hr class="ink-divider">
+
+    <!-- ── The Idea / Manifesto ───────────────────────────── -->
+    <section id="idea">
+        <div class="container">
+            <div class="idea-grid">
+                <div class="idea-accent reveal">
+                    <div class="idea-glyph">
+                        ∮
+                    </div>
+                    <ul class="idea-principles">
+                        <li>Fix before replace</li>
+                        <li>Open before closed</li>
+                        <li>Local before cloud</li>
+                        <li>Understand before use</li>
+                        <li>Share what you grow</li>
+                    </ul>
+                </div>
+                <div class="reveal">
+                    <span class="section-label">The Idea</span>
+                    <div class="idea-manifesto">
+                        <p>
+                            Technology doesn't have to come shrink-wrapped. The most powerful
+                            tools in computing history were built by people in kitchens and
+                            spare rooms — not boardrooms. <strong>That lineage is alive.</strong>
+                        </p>
+                        <p>
+                            Undergroundroots is a document of that work. DIY hardware.
+                            Self-hosted infrastructure. Repurposed machines given new purpose.
+                            Solar-powered nodes humming in the dark.
+                        </p>
+                        <p>
+                            We believe in the <strong>mycelium model</strong> — a distributed network with
+                            no single point of failure, where knowledge travels freely between
+                            nodes, and where every organism benefits the whole.
+                        </p>
+                        <p>
+                            You don't need a data centre. You need time, curiosity,
+                            and a willingness to get your hands dirty.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <hr class="ink-divider">
+
+    <!-- ── Field Notes (Blog) ─────────────────────────────── -->
+    <section id="field-notes">
+        <div class="container">
+            <div class="field-notes-header reveal">
+                <div>
+                    <span class="section-label">Field Notes</span>
+                    <h2>Recent Dispatches</h2>
+                </div>
+                <a href="/field-notes" class="view-all">All entries →</a>
+            </div>
+
+            <div class="notes-grid">
+
+                <article class="note-card reveal">
+                    <span class="note-tag">Hardware</span>
+                    <h3 class="note-title">Turning a Dead Laptop into a Low-Power Home Server</h3>
+                    <p class="note-excerpt">
+                        A 2012 Thinkpad with a cracked screen, 8GB RAM, and a failing battery
+                        found new life as a headless node running four services on 18W idle.
+                    </p>
+                    <div class="note-footer">
+                        <span class="note-date">2026-06-01</span>
+                        <a href="#" class="note-read-more">Read →</a>
+                    </div>
+                </article>
+
+                <article class="note-card reveal">
+                    <span class="note-tag">Solar</span>
+                    <h3 class="note-title">100W Panel, Charge Controller, and a Raspberry Pi 5</h3>
+                    <p class="note-excerpt">
+                        Full off-grid compute for under $120. A walkthrough of the wiring,
+                        the LiFePO4 cell selection, and what happens when clouds roll in.
+                    </p>
+                    <div class="note-footer">
+                        <span class="note-date">2026-05-18</span>
+                        <a href="#" class="note-read-more">Read →</a>
+                    </div>
+                </article>
+
+                <article class="note-card reveal">
+                    <span class="note-tag">Firmware</span>
+                    <h3 class="note-title">Writing Your Own ESP32 Mining Controller from Scratch</h3>
+                    <p class="note-excerpt">
+                        ESP-IDF from zero to flashing hash on real silicon. What the vendor
+                        datasheets don't tell you, and why the first 29 attempts all fail.
+                    </p>
+                    <div class="note-footer">
+                        <span class="note-date">2026-05-04</span>
+                        <a href="#" class="note-read-more">Read →</a>
+                    </div>
+                </article>
+
+            </div>
+        </div>
+    </section>
+
+    <hr class="ink-divider">
+
+    <!-- ── Workshop Spotlight ─────────────────────────────── -->
+    <section id="workshop">
+        <div class="container">
+            <div class="workshop-grid">
+
+                <div class="workshop-image reveal">
+                    <div class="workshop-image-placeholder">
+                        <div>[ project photo ]</div>
+                        <div class="mono" style="margin-top:0.5rem;font-size:0.6em;opacity:0.5;">640 × 480</div>
+                    </div>
+                </div>
+
+                <div class="reveal">
+                    <span class="section-label">Workshop Spotlight</span>
+                    <h2>ClusterAxe</h2>
+                    <div class="workshop-meta">
+                        <div class="workshop-stat">
+                            <span class="workshop-stat-label">Chip</span>
+                            <span class="workshop-stat-value">BM1370</span>
+                        </div>
+                        <div class="workshop-stat">
+                            <span class="workshop-stat-label">Board</span>
+                            <span class="workshop-stat-value">ESP32-S3</span>
+                        </div>
+                        <div class="workshop-stat">
+                            <span class="workshop-stat-label">Voltage</span>
+                            <span class="workshop-stat-value">12V</span>
+                        </div>
+                        <div class="workshop-stat">
+                            <span class="workshop-stat-label">Nodes</span>
+                            <span class="workshop-stat-value">1 + 8</span>
+                        </div>
+                    </div>
+                    <p class="workshop-desc">
+                        A custom ASIC mining cluster built around the BM1370 chip on a
+                        GT-board form factor. ESP-NOW peer networking, auto-calibrating
+                        frequency ramp, VarDiff tuning, and a Vault-Tec inspired UI.
+                        No vendor firmware. No cloud dependency. Entirely open.
+                    </p>
+                    <a href="https://github.com/ShaeOJ/ClusterAxe" class="workshop-link" target="_blank" rel="noopener">
+                        View on GitHub ↗
+                    </a>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <hr class="ink-divider">
+
+    <!-- ── The Stack ──────────────────────────────────────── -->
+    <section id="stack">
+        <div class="container">
+            <div class="stack-intro reveal">
+                <span class="section-label">The Stack</span>
+                <h2>Tools of the Trade</h2>
+                <p>The hardware, software, and philosophy we actually use. No sponsorships. No affiliate links.</p>
+            </div>
+
+            <div class="stack-grid">
+                <div class="stack-item reveal">
+                    <span class="stack-icon">🟩</span>
+                    <span class="stack-name">Raspberry Pi</span>
+                    <span class="stack-desc">Always-on compute, from Pi Zero to Pi 5</span>
+                </div>
+                <div class="stack-item reveal">
+                    <span class="stack-icon">⚡</span>
+                    <span class="stack-name">ESP32-S3</span>
+                    <span class="stack-desc">WiFi + BLE edge nodes, IDF 5.x</span>
+                </div>
+                <div class="stack-item reveal">
+                    <span class="stack-icon">🐧</span>
+                    <span class="stack-name">Linux</span>
+                    <span class="stack-desc">Debian / Ubuntu — bare metal and VPS</span>
+                </div>
+                <div class="stack-item reveal">
+                    <span class="stack-icon">☀️</span>
+                    <span class="stack-name">Solar + LiFePO4</span>
+                    <span class="stack-desc">12V off-grid power rails</span>
+                </div>
+                <div class="stack-item reveal">
+                    <span class="stack-icon">🔧</span>
+                    <span class="stack-name">Old Thinkpads</span>
+                    <span class="stack-desc">Repurposed servers, 15–25W idle</span>
+                </div>
+                <div class="stack-item reveal">
+                    <span class="stack-icon">🕸️</span>
+                    <span class="stack-name">WireGuard</span>
+                    <span class="stack-desc">Private mesh networking, zero drama</span>
+                </div>
+                <div class="stack-item reveal">
+                    <span class="stack-icon">🐘</span>
+                    <span class="stack-name">PostgreSQL</span>
+                    <span class="stack-desc">The only database you'll ever need</span>
+                </div>
+                <div class="stack-item reveal">
+                    <span class="stack-icon">⚙️</span>
+                    <span class="stack-name">Go + C</span>
+                    <span class="stack-desc">Fast, lean, no runtimes to maintain</span>
+                </div>
+                <div class="stack-item reveal">
+                    <span class="stack-icon">🔗</span>
+                    <span class="stack-name">Git</span>
+                    <span class="stack-desc">Everything version-controlled, always</span>
+                </div>
+                <div class="stack-item reveal">
+                    <span class="stack-icon">📡</span>
+                    <span class="stack-name">ESP-NOW</span>
+                    <span class="stack-desc">Peer mesh without a router</span>
+                </div>
+                <div class="stack-item reveal">
+                    <span class="stack-icon">🔥</span>
+                    <span class="stack-name">Soldering Iron</span>
+                    <span class="stack-desc">A good one. Hakko or nothing.</span>
+                </div>
+                <div class="stack-item reveal">
+                    <span class="stack-icon">📖</span>
+                    <span class="stack-name">Datasheets</span>
+                    <span class="stack-desc">RTFM is not a joke here</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <hr class="ink-divider">
+
+    <!-- ── Footer ─────────────────────────────────────────── -->
+    <footer class="site-footer" id="compost">
+        <div class="container">
+            <div class="footer-inner">
+                <div>
+                    <div class="footer-logo">Undergroundroots</div>
+                    <div class="footer-tagline">Grown from scratch. 2026.</div>
+                </div>
+                <ul class="footer-links">
+                    <li><a href="https://github.com/ShaeOJ/Undergroundroots" target="_blank" rel="noopener">GitHub</a></li>
+                    <li><a href="#field-notes">Field Notes</a></li>
+                    <li><a href="#workshop">Workshop</a></li>
+                    <li><a href="#stack">Stack</a></li>
+                </ul>
+            </div>
+        </div>
+    </footer>
+
+</div><!-- /.site-wrap -->
+
+<script src="assets/js/roots.js"></script>
+<script src="assets/js/main.js"></script>
+</body>
+</html>
