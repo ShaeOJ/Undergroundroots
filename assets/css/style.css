@@ -652,6 +652,228 @@ section {
     line-height: 1.5;
 }
 
+/* ── Inner pages ─────────────────────────────────────────── */
+.page-hero {
+    padding-top: clamp(7rem, 14vw, 10rem);
+    padding-bottom: clamp(3rem, 6vw, 5rem);
+}
+
+.page-title {
+    font-size: clamp(2.2rem, 6vw, 4.5rem);
+    margin-top: 0.75rem;
+    margin-bottom: 1.25rem;
+}
+
+.page-lead {
+    font-style: italic;
+    color: var(--slate);
+    font-size: clamp(1rem, 1.8vw, 1.2rem);
+    max-width: 640px;
+    line-height: 1.8;
+}
+
+.page-body {
+    padding: var(--section-pad) 0;
+}
+
+.back-link {
+    font-family: var(--font-mono);
+    font-size: 0.68rem;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--bark);
+    transition: color 0.2s;
+    display: inline-block;
+}
+
+.back-link:hover { color: var(--mycelium); }
+
+.article-meta {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    margin-top: 1.25rem;
+    flex-wrap: wrap;
+}
+
+.meta-dot {
+    color: var(--bark);
+    font-size: 0.8rem;
+}
+
+/* Article layout */
+.article-grid {
+    display: grid;
+    grid-template-columns: 200px 1fr;
+    gap: clamp(2.5rem, 6vw, 5rem);
+    align-items: start;
+}
+
+.article-sidebar {
+    position: sticky;
+    top: 6rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+    border: 1px solid var(--root-brown);
+    background: var(--subsoil);
+}
+
+.sidebar-block {
+    padding: 0.85rem 1.1rem;
+    border-bottom: 1px solid var(--root-brown);
+}
+
+.sidebar-block:last-child { border-bottom: none; }
+
+.sidebar-label {
+    font-family: var(--font-mono);
+    font-size: 0.58rem;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--bark);
+    margin-bottom: 0.25rem;
+}
+
+.sidebar-value {
+    font-family: var(--font-mono);
+    font-size: 0.78rem;
+    color: var(--mycelium);
+    line-height: 1.4;
+}
+
+/* Article body prose */
+.article-body h2 {
+    font-size: clamp(1.3rem, 2.5vw, 1.9rem);
+    margin-top: 2.5rem;
+    margin-bottom: 0.9rem;
+    color: var(--mycelium);
+}
+
+.article-body h2:first-child { margin-top: 0; }
+
+.article-body h3 {
+    font-size: 1.1rem;
+    margin-top: 1.75rem;
+    margin-bottom: 0.6rem;
+    color: var(--spore);
+    font-family: var(--font-mono);
+    letter-spacing: 0.06em;
+}
+
+.article-body p {
+    color: var(--spore);
+    line-height: 1.85;
+    margin-bottom: 1.1rem;
+}
+
+.article-body code {
+    font-family: var(--font-mono);
+    font-size: 0.82em;
+    color: var(--bio-dim);
+    background: var(--subsoil);
+    padding: 0.1em 0.4em;
+    border: 1px solid var(--root-brown);
+}
+
+.article-list {
+    list-style: none;
+    margin: 0 0 1.25rem 0;
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+}
+
+.article-list li {
+    color: var(--spore);
+    font-size: 0.98rem;
+    line-height: 1.7;
+    padding-left: 1.5rem;
+    position: relative;
+}
+
+.article-list li::before {
+    content: '◈';
+    position: absolute;
+    left: 0;
+    color: var(--bio-dim);
+    font-size: 0.7em;
+    top: 0.2em;
+}
+
+.article-cta {
+    margin-top: 3rem;
+    padding-top: 2rem;
+    border-top: 1px solid var(--root-brown);
+}
+
+/* Workshop list page */
+.workshop-list {
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+}
+
+.workshop-entry {
+    padding: clamp(2rem, 4vw, 3rem) 0;
+}
+
+.workshop-entry-header {
+    display: grid;
+    grid-template-columns: 1fr auto;
+    gap: 2rem;
+    align-items: start;
+    margin-bottom: 1.5rem;
+}
+
+.workshop-entry-title {
+    font-size: clamp(1.6rem, 3vw, 2.5rem);
+    margin-top: 0.6rem;
+    margin-bottom: 0.5rem;
+}
+
+.workshop-entry-sub {
+    color: var(--slate);
+    font-style: italic;
+    font-size: 1rem;
+    max-width: 520px;
+    margin-top: 0;
+}
+
+.workshop-entry-stats {
+    display: flex;
+    gap: 1.5rem;
+    flex-shrink: 0;
+    flex-wrap: wrap;
+    justify-content: flex-end;
+}
+
+.workshop-entry-links {
+    display: flex;
+    gap: 2rem;
+    flex-wrap: wrap;
+}
+
+@media (max-width: 720px) {
+    .article-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .article-sidebar {
+        position: static;
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    .workshop-entry-header {
+        grid-template-columns: 1fr;
+    }
+
+    .workshop-entry-stats {
+        justify-content: flex-start;
+    }
+}
+
 /* ── The Craft ──────────────────────────────────────────── */
 #craft {
     background: var(--subsoil);

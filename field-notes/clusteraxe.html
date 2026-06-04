@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ClusterAxe — Field Notes — Undergroundroots</title>
+    <meta name="description" content="ESP-NOW cluster firmware for NerdQAxe++ master and up to 8 ZombieOS BitAxe slaves. No router. No coordinator. Just ESP32-S3 nodes talking to each other.">
+    <link rel="stylesheet" href="../assets/css/style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=Lora:ital,wght@0,400;0,600;1,400&family=Space+Mono:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+</head>
+<body>
+<canvas id="root-canvas" aria-hidden="true"></canvas>
+<div class="site-wrap">
+
+    <nav class="site-nav" aria-label="Main navigation">
+        <a href="/" class="nav-logo">Under<span>ground</span>roots</a>
+        <ul class="nav-links">
+            <li><a href="/field-notes/">Field Notes</a></li>
+            <li><a href="/workshop/">Workshop</a></li>
+            <li><a href="/#craft">The Craft</a></li>
+            <li><a href="/#stack">The Stack</a></li>
+            <li><a href="/#compost">About</a></li>
+        </ul>
+    </nav>
+
+    <section class="page-hero">
+        <div class="container">
+            <a href="/field-notes/" class="back-link">← Field Notes</a>
+            <span class="note-tag" style="margin-top:1.5rem;display:inline-block;">ESP32 / Cluster</span>
+            <h1 class="page-title">ClusterAxe</h1>
+            <p class="page-lead">One NerdQAxe++ master, up to eight ZombieOS BitAxe slaves, and zero infrastructure between them. ESP-NOW wireless mesh, self-healing registration, and nonce-space partitioning across the whole cluster.</p>
+            <div class="article-meta">
+                <span class="mono">2026-05-26</span>
+                <span class="meta-dot">·</span>
+                <a href="https://github.com/ShaeOJ/NerdAxe_Cluster" class="workshop-link" target="_blank" rel="noopener">NerdAxe_Cluster ↗</a>
+                <span class="meta-dot">·</span>
+                <a href="https://github.com/ShaeOJ/ClusterAxe" class="workshop-link" target="_blank" rel="noopener">ClusterAxe (slave) ↗</a>
+            </div>
+        </div>
+    </section>
+
+    <hr class="ink-divider">
+
+    <section class="page-body">
+        <div class="container">
+            <div class="article-grid">
+
+                <aside class="article-sidebar reveal">
+                    <div class="sidebar-block">
+                        <div class="sidebar-label">Master</div>
+                        <div class="sidebar-value">NerdQAxe++</div>
+                    </div>
+                    <div class="sidebar-block">
+                        <div class="sidebar-label">Slave</div>
+                        <div class="sidebar-value">ZombieOS BitAxe</div>
+                    </div>
+                    <div class="sidebar-block">
+                        <div class="sidebar-label">Transport</div>
+                        <div class="sidebar-value">ESP-NOW (wireless)</div>
+                    </div>
+                    <div class="sidebar-block">
+                        <div class="sidebar-label">Max Slaves</div>
+                        <div class="sidebar-value">8</div>
+                    </div>
+                    <div class="sidebar-block">
+                        <div class="sidebar-label">Chip (slave)</div>
+                        <div class="sidebar-value">BM1370 × 2</div>
+                    </div>
+                    <div class="sidebar-block">
+                        <div class="sidebar-label">MCU</div>
+                        <div class="sidebar-value">ESP32-S3</div>
+                    </div>
+                    <div class="sidebar-block">
+                        <div class="sidebar-label">IDF</div>
+                        <div class="sidebar-value">5.5.1</div>
+                    </div>
+                    <div class="sidebar-block">
+                        <div class="sidebar-label">Protocol</div>
+                        <div class="sidebar-value">Stratum V1</div>
+                    </div>
+                </aside>
+
+                <article class="article-body reveal">
+
+                    <h2>The Concept</h2>
+                    <p>A mining cluster where every node is an ESP32-S3, the master holds the pool connection, and all coordination happens over ESP-NOW — a low-latency 802.11 broadcast protocol that requires no access point. The NerdQAxe++ acts as master: it connects to the stratum pool, generates work, and broadcasts jobs to up to 8 slave devices. Slaves mine, find shares, and report back. The pool sees one worker. The cluster acts as one miner.</p>
+
+                    <h2>Architecture</h2>
+                    <p>The master runs the full stratum session — <code>mining.subscribe</code>, <code>mining.authorize</code>, job management, share submission. When a new job arrives from the pool, the master carves the 32-bit nonce space into equal slices and broadcasts a <code>$CLWRK</code> message to each registered slave, assigning each node a unique nonce range. With 5 nodes (1 master + 4 slaves), each covers exactly 20% of the search space.</p>
+                    <p>Slaves register on boot by broadcasting a <code>$REGISTER</code> beacon. The master responds with <code>$CLACK</code> containing the slave's assigned ID and nonce slot. Heartbeats flow every 3 seconds — if a slave misses 15 consecutive heartbeats (30 seconds), the master drops it. Slaves self-deregister after 35 seconds without work, then re-register automatically.</p>
+
+                    <h2>The Bugs That Almost Broke It</h2>
+                    <p>Getting 8 nodes to stay alive simultaneously took several rounds of fixes. The major ones:</p>
+
+                    <h3>RX Queue Overflow</h3>
+                    <p>ESP-NOW traffic (beacons, work broadcasts, heartbeats, share reports) all flows through a single queue. With 8 slaves, work broadcasts arrive for all nodes simultaneously and filled the 16-slot queue, causing heartbeats to be silently dropped. The master's timeout fired, dropped the slave, and the slave re-registered — a constant churn that looked like instability. Fix: doubled the RX queue to 32 slots on both master and slave firmware.</p>
+
+                    <h3>ASIC Queue Idle</h3>
+                    <p>After the stability fix, slaves showed dramatically fewer shares. The root cause: <code>cluster_slave_submit_to_asic</code> enqueued exactly one job when work arrived, then the ASIC processed it in ~700ms and called <code>queue_dequeue</code> — which blocked forever on <code>pthread_cond_wait</code>. The slave was only mining for 700ms per master broadcast, then sitting idle. The fix added a refill loop: when the job queue drops below watermark, the slave reconstructs a job from the last received work and enqueues it, keeping the ASIC continuously fed.</p>
+
+                    <h3>Stale Job Accumulation</h3>
+                    <p>Work arrives from the master every ~500ms. Without clearing the queue on new work, stale jobs accumulated over 32 slots. The ASIC was mining old templates and submitting shares the pool rejected as stale. One line fix: <code>ASIC_jobs_queue_clear()</code> before every new enqueue — the slave always mines the freshest work.</p>
+
+                    <h3>Full Cluster Rejection</h3>
+                    <p>When a cluster is full (8 slaves registered), the master sends <code>$CLACK,0,FULL</code>. The original slave code set <code>registered = true</code> unconditionally — a rejected slave would claim slot 0 (the master's own slot), send heartbeats on it, and never receive work. Fixed with an explicit rejection check before marking registered.</p>
+
+                    <h2>Auto-Timing Calibration</h2>
+                    <p>Each node runs an auto-timing calibrator that finds the optimal ASIC job submission interval for its silicon. The calibration sweeps 10 interval steps from 350ms to 750ms, spending 180 seconds at each step to gather reliable share statistics. The winner is saved to NVS flash and restored on every reboot — a fresh calibration only runs if the device has never been calibrated, or if the user triggers it manually from the Tuner page.</p>
+
+                    <h2>The Tuner UI</h2>
+                    <p>ClusterAxe's web UI is built in Angular with PrimeNG components. The Tuner page exposes the watchdog (voltage throttle and recovery thresholds) and the auto-timing calibration state. The benchmark tool runs a pure-frontend frequency and voltage sweep using the existing system API — no new firmware endpoints. It logs hashrate, efficiency (J/TH), and hardware error rate per test point, identifies the best stable operating point, and writes it to NVS immediately whenever a new best is found mid-run.</p>
+
+                    <div class="article-cta">
+                        <a href="https://github.com/ShaeOJ/NerdAxe_Cluster" class="hero-cta" target="_blank" rel="noopener">View on GitHub ↗</a>
+                    </div>
+
+                </article>
+
+            </div>
+        </div>
+    </section>
+
+    <hr class="ink-divider">
+    <footer class="site-footer">
+        <div class="container">
+            <div class="footer-inner">
+                <div>
+                    <div class="footer-logo">Undergroundroots</div>
+                    <div class="footer-tagline">Grown from scratch. 2026.</div>
+                </div>
+                <ul class="footer-links">
+                    <li><a href="https://github.com/ShaeOJ/Undergroundroots" target="_blank" rel="noopener">GitHub</a></li>
+                    <li><a href="/field-notes/">Field Notes</a></li>
+                    <li><a href="/workshop/">Workshop</a></li>
+                    <li><a href="/#stack">Stack</a></li>
+                </ul>
+            </div>
+        </div>
+    </footer>
+
+</div>
+<script src="../assets/js/roots.js"></script>
+<script src="../assets/js/main.js"></script>
+</body>
+</html>

@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ZombieOS — Field Notes — Undergroundroots</title>
+    <meta name="description" content="A custom firmware overlay on Braiins OS for a single-board Antminer S9. Per-chip voltage autotuning, WebGL UI, and a Vault-Tec design system.">
+    <link rel="stylesheet" href="../assets/css/style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=Lora:ital,wght@0,400;0,600;1,400&family=Space+Mono:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+</head>
+<body>
+<canvas id="root-canvas" aria-hidden="true"></canvas>
+<div class="site-wrap">
+
+    <nav class="site-nav" aria-label="Main navigation">
+        <a href="/" class="nav-logo">Under<span>ground</span>roots</a>
+        <ul class="nav-links">
+            <li><a href="/field-notes/">Field Notes</a></li>
+            <li><a href="/workshop/">Workshop</a></li>
+            <li><a href="/#craft">The Craft</a></li>
+            <li><a href="/#stack">The Stack</a></li>
+            <li><a href="/#compost">About</a></li>
+        </ul>
+    </nav>
+
+    <section class="page-hero">
+        <div class="container">
+            <a href="/field-notes/" class="back-link">← Field Notes</a>
+            <span class="note-tag" style="margin-top:1.5rem;display:inline-block;">ASIC / Firmware</span>
+            <h1 class="page-title">ZombieOS</h1>
+            <p class="page-lead">Wringing every last hash from a retired Antminer S9 — custom Braiins OS overlay, per-chip voltage autotuning, and a fully custom web UI built from scratch.</p>
+            <div class="article-meta">
+                <span class="mono">2026-06-01</span>
+                <span class="meta-dot">·</span>
+                <a href="https://github.com/ShaeOJ/Zombie-Braiins-" class="workshop-link" target="_blank" rel="noopener">GitHub ↗</a>
+            </div>
+        </div>
+    </section>
+
+    <hr class="ink-divider">
+
+    <section class="page-body">
+        <div class="container">
+            <div class="article-grid">
+
+                <aside class="article-sidebar reveal">
+                    <div class="sidebar-block">
+                        <div class="sidebar-label">Hardware</div>
+                        <div class="sidebar-value">Antminer S9</div>
+                    </div>
+                    <div class="sidebar-block">
+                        <div class="sidebar-label">Chip</div>
+                        <div class="sidebar-value">BM1387 × 63</div>
+                    </div>
+                    <div class="sidebar-block">
+                        <div class="sidebar-label">Tune Voltage</div>
+                        <div class="sidebar-value">7.942 V</div>
+                    </div>
+                    <div class="sidebar-block">
+                        <div class="sidebar-label">Iterations</div>
+                        <div class="sidebar-value">29</div>
+                    </div>
+                    <div class="sidebar-block">
+                        <div class="sidebar-label">Slow Chips</div>
+                        <div class="sidebar-value">0 / 63</div>
+                    </div>
+                    <div class="sidebar-block">
+                        <div class="sidebar-label">Base OS</div>
+                        <div class="sidebar-value">Braiins OS Legacy</div>
+                    </div>
+                    <div class="sidebar-block">
+                        <div class="sidebar-label">UI Layer</div>
+                        <div class="sidebar-value">Lua CGI + WebGL</div>
+                    </div>
+                    <div class="sidebar-block">
+                        <div class="sidebar-label">Pool</div>
+                        <div class="sidebar-value">firepool.ca BCH Solo</div>
+                    </div>
+                </aside>
+
+                <article class="article-body reveal">
+
+                    <h2>The Problem With Stock</h2>
+                    <p>An Antminer S9 is a piece of 2017 hardware running firmware designed for a data centre — not a home lab. Stock Bitmain firmware gives you a basic web interface, no tuning control, and no insight into what's actually happening at the chip level. Braiins OS fixes the tuning side, but the UI is still generic. ZombieOS is the next layer: a complete firmware overlay that takes ownership of the entire stack.</p>
+
+                    <h2>The Architecture</h2>
+                    <p>ZombieOS runs on top of Braiins OS Legacy (OpenWrt-based). The overlay lives in <code>/www/zombieos/</code> and consists of four HTML pages served by uhttpd, backed by two Lua CGI scripts:</p>
+                    <ul class="article-list">
+                        <li><strong>zombieos-stats</strong> — reads Prometheus metrics from BOS+ (always gzip), UCI config, TOML config, and the autotune savefile. Returns a single JSON payload covering hashrate, temperature, fan state, chip health, and autotuner stage.</li>
+                        <li><strong>zombieos-ctl</strong> — handles all write operations: fan mode, frequency, voltage, profile selection, board toggles, pool config, restart.</li>
+                    </ul>
+                    <p>The Prometheus layer in BOS+ 0.9.0 has its quirks — it reports <code>hot_temperature 0</code> while the autotuner is active (a firmware bug). ZombieOS implements a three-tier fallback: Prometheus → UCI → direct TOML parse, so the displayed temperatures are always accurate regardless of autotuner state.</p>
+
+                    <h2>Per-Chip Voltage Autotuning</h2>
+                    <p>The autotuner runs four stages: RAMP, BASELINE, CHIP TUNE, and VERIFY. Stage 3 is where the real work happens — it sweeps (voltage, frequency) combinations for every chip individually, finding the minimum stable voltage for each one. With 4 weaker-than-average BM1387 chips on this board, Stage 3 took over four hours of continuous testing at ~211 seconds per test point.</p>
+                    <p>After 29 iterations across multiple runs, Stage 4 VERIFY passed clean: <strong>7.942 V, 0 slow chips, all 63 hashing</strong>. The profile is saved to NAND and survives every reboot.</p>
+                    <p>One critical discovery: bosminer always divides the power target by 3 regardless of how many boards are installed. With a single board, you set the target at 3× your desired per-board budget. The ZombieOS dashboard shows the real board budget, not the misleading raw PSU slider value.</p>
+
+                    <h2>The UI</h2>
+                    <p>Four pages, each built from scratch with a Vault-Tec dual-colour theme — amber gold and deep blue, phosphor scanlines, corner bracket accents on every card. The dashboard loads with a CRT phosphor boot animation and staggered card entrances, then settles into a live-polling layout with:</p>
+                    <ul class="article-list">
+                        <li>Full-width live graphs — hashrate (2fr), temperature and power (1fr each)</li>
+                        <li>Autotuner pipeline visualiser — 4-step progress indicator driven by real savefile stage data, not elapsed time</li>
+                        <li>Chip health grid — 63 boxes, green/orange by per-chip threshold status</li>
+                        <li>Block odds card — real BCH network difficulty, shows "1 in 2.3M odds" rather than an earnings estimate</li>
+                        <li>WebGL globe — raw GLSL, 4 shader programs, Phong ocean shading, polar ice caps, atmosphere rim glow, live signal arc when shares are accepted</li>
+                    </ul>
+
+                    <h2>The Globe</h2>
+                    <p>The globe is written entirely in raw WebGL — no Three.js, no library of any kind. Four GLSL shader programs handle the sphere with ocean shading, continent fills, grid lines and signal arcs, atmospheric glow, and star points. The continents are 9 simplified closed polygons triangulated as TRIANGLE_FANs from their centroid. A 2D canvas overlay stacks above the WebGL canvas for text labels and ripple rings that fire on each accepted share.</p>
+
+                    <h2>Fan Watchdog</h2>
+                    <p>The fan control runs as a state machine inside the stats CGI: <code>auto</code>, <code>floor</code>, <code>boost</code>, and <code>at_assist</code>. The <code>at_assist</code> state takes over when the autotuner is active — BOS+ PID is bypassed and ZombieOS drives fan speed proportionally to board temperature via a two-segment curve. The watchdog re-evaluates every 5 seconds and adjusts both up and down with ±5% hysteresis to prevent oscillation.</p>
+
+                    <div class="article-cta">
+                        <a href="https://github.com/ShaeOJ/Zombie-Braiins-" class="hero-cta" target="_blank" rel="noopener">View on GitHub ↗</a>
+                    </div>
+
+                </article>
+
+            </div>
+        </div>
+    </section>
+
+    <hr class="ink-divider">
+    <footer class="site-footer">
+        <div class="container">
+            <div class="footer-inner">
+                <div>
+                    <div class="footer-logo">Undergroundroots</div>
+                    <div class="footer-tagline">Grown from scratch. 2026.</div>
+                </div>
+                <ul class="footer-links">
+                    <li><a href="https://github.com/ShaeOJ/Undergroundroots" target="_blank" rel="noopener">GitHub</a></li>
+                    <li><a href="/field-notes/">Field Notes</a></li>
+                    <li><a href="/workshop/">Workshop</a></li>
+                    <li><a href="/#stack">Stack</a></li>
+                </ul>
+            </div>
+        </div>
+    </footer>
+
+</div>
+<script src="../assets/js/roots.js"></script>
+<script src="../assets/js/main.js"></script>
+</body>
+</html>

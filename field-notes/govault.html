@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GoVault — Field Notes — Undergroundroots</title>
+    <meta name="description" content="A full Stratum V1 server built in Go — desktop app, headless edge node, and admin panel. Solo mining or upstream proxy, no pool operator required.">
+    <link rel="stylesheet" href="../assets/css/style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=Lora:ital,wght@0,400;0,600;1,400&family=Space+Mono:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+</head>
+<body>
+<canvas id="root-canvas" aria-hidden="true"></canvas>
+<div class="site-wrap">
+
+    <nav class="site-nav" aria-label="Main navigation">
+        <a href="/" class="nav-logo">Under<span>ground</span>roots</a>
+        <ul class="nav-links">
+            <li><a href="/field-notes/">Field Notes</a></li>
+            <li><a href="/workshop/">Workshop</a></li>
+            <li><a href="/#craft">The Craft</a></li>
+            <li><a href="/#stack">The Stack</a></li>
+            <li><a href="/#compost">About</a></li>
+        </ul>
+    </nav>
+
+    <section class="page-hero">
+        <div class="container">
+            <a href="/field-notes/" class="back-link">← Field Notes</a>
+            <span class="note-tag" style="margin-top:1.5rem;display:inline-block;">Go / Stratum</span>
+            <h1 class="page-title">GoVault</h1>
+            <p class="page-lead">A full Stratum V1 mining server written in Go — packaged as a native desktop app, a headless edge node, and an admin aggregator. Solo mine against your own node, or proxy through to any upstream pool. No fees. No operator.</p>
+            <div class="article-meta">
+                <span class="mono">v0.2.0-beta.5 · 2026-04-23</span>
+                <span class="meta-dot">·</span>
+                <a href="https://github.com/ShaeOJ/GoVault" class="workshop-link" target="_blank" rel="noopener">GitHub ↗</a>
+            </div>
+        </div>
+    </section>
+
+    <hr class="ink-divider">
+
+    <section class="page-body">
+        <div class="container">
+            <div class="article-grid">
+
+                <aside class="article-sidebar reveal">
+                    <div class="sidebar-block">
+                        <div class="sidebar-label">Language</div>
+                        <div class="sidebar-value">Go 1.26</div>
+                    </div>
+                    <div class="sidebar-block">
+                        <div class="sidebar-label">UI</div>
+                        <div class="sidebar-value">Wails v2 + Svelte 4</div>
+                    </div>
+                    <div class="sidebar-block">
+                        <div class="sidebar-label">DB</div>
+                        <div class="sidebar-value">SQLite (pure Go)</div>
+                    </div>
+                    <div class="sidebar-block">
+                        <div class="sidebar-label">Protocol</div>
+                        <div class="sidebar-value">Stratum V1</div>
+                    </div>
+                    <div class="sidebar-block">
+                        <div class="sidebar-label">Coins</div>
+                        <div class="sidebar-value">BTC BCH DGB BC2 XEC</div>
+                    </div>
+                    <div class="sidebar-block">
+                        <div class="sidebar-label">Hardware</div>
+                        <div class="sidebar-value">Bitaxe NerdAxe NerdMiner Avalon Q</div>
+                    </div>
+                    <div class="sidebar-block">
+                        <div class="sidebar-label">Themes</div>
+                        <div class="sidebar-value">6</div>
+                    </div>
+                    <div class="sidebar-block">
+                        <div class="sidebar-label">Binaries</div>
+                        <div class="sidebar-value">3</div>
+                    </div>
+                </aside>
+
+                <article class="article-body reveal">
+
+                    <h2>Why Build This</h2>
+                    <p>Every home miner eventually asks the same question: why send my hashes to a pool operator I don't control, paying fees on rewards I can't verify? GoVault exists to answer that question. Point your Bitaxe, NerdAxe, or NerdMiner at GoVault and it handles the entire Stratum session — job generation, share validation, vardiff, and block submission — entirely on your own hardware.</p>
+
+                    <h2>Three Binaries, One Codebase</h2>
+                    <ul class="article-list">
+                        <li><strong>GoVault.exe</strong> — native desktop app (Wails v2 + Svelte 4). 1280×800 window, WebView2 shell, six UI themes. Run it on your mining rig's host machine or any Windows box on the same network.</li>
+                        <li><strong>edgenode.exe</strong> — headless server with a browser-based setup wizard. Designed for always-on deployment on a Pi, old laptop, or VPS. Registers with the admin panel so all your edge nodes aggregate into one view.</li>
+                        <li><strong>gostratum-admin.exe</strong> — polls registered edge nodes and consolidates their stats into a single dashboard.</li>
+                    </ul>
+
+                    <h2>Two Modes</h2>
+                    <h3>Solo Mode</h3>
+                    <p>GoVault connects directly to a local full node via JSON-RPC <code>getblocktemplate</code>. The chain monitor polls every 10 seconds with a 500ms fast-detect on block changes — when a new block arrives, all connected miners get fresh work within half a second. If a miner finds a valid block, GoVault submits it directly to the network via <code>submitblock</code>. No middleman.</p>
+
+                    <h3>Proxy Mode</h3>
+                    <p>In proxy mode, GoVault maintains an outbound Stratum connection to an upstream pool (FirePool, any other pool, or a solo pool endpoint). Jobs relay from upstream to miners; shares validate locally and forward upstream when they meet the pool's difficulty. Each miner gets its own extranonce1 carved from a prefix of the upstream extranonce — correct nonce-space isolation without requiring the upstream to know about individual miners.</p>
+                    <p>The edge node takes this further with per-miner pass-through: each connecting miner gets its own dedicated upstream TCP connection. From the pool's perspective, every miner is an independent worker with its own credentials and its own hashrate attribution.</p>
+
+                    <h2>VarDiff</h2>
+                    <p>Target shares per interval, retarget every N seconds, variance tolerance band before adjusting, idle halving on timeout. Worker difficulty persists to SQLite and restores on reconnect — a miner that was running at 512K difficulty doesn't have to ramp back up from scratch after a disconnect. Hardware auto-detection sets the starting difficulty per device type: NerdMiner starts much lower than a Bitaxe, which starts much lower than an Avalon Q.</p>
+                    <p>One important detail: <code>mining.suggest_difficulty</code> is stored as a vardiff floor only — it does not override the current difficulty. Some ASIC firmware (BM1366) sends a hardware-filtered difficulty of 512 regardless of actual hashrate. Treating that as the target would cause severe hashrate underestimation.</p>
+
+                    <h2>The UI</h2>
+                    <p>Six themes ship in the desktop app: Nuclear, TRON, Vault-Tec, Crimson, Ultraviolet, and Plasma. The Vault-Tec theme carries the same design language as ZombieOS — amber gold on deep blue, scanline texture, corner bracket card accents. The edge node UI is a standalone HTML page with a rolling SVG hashrate chart (60-point window, gradient fill, current/peak/average labels) and a miners table with live share rates and accept/reject bars.</p>
+
+                    <h2>Supported Coins</h2>
+                    <p>BTC, BCH, DGB (SHA-256d — multi-algo aware network difficulty), BC2 (Bitcoin II), and XEC (eCash — mandatory miner fund and staking reward injected correctly into every coinbase). Address validation is per-coin, pool presets are included for FirePool, and node auto-detection probes the local RPC and reads cookie auth automatically.</p>
+
+                    <div class="article-cta">
+                        <a href="https://github.com/ShaeOJ/GoVault" class="hero-cta" target="_blank" rel="noopener">View on GitHub ↗</a>
+                    </div>
+
+                </article>
+
+            </div>
+        </div>
+    </section>
+
+    <hr class="ink-divider">
+    <footer class="site-footer">
+        <div class="container">
+            <div class="footer-inner">
+                <div>
+                    <div class="footer-logo">Undergroundroots</div>
+                    <div class="footer-tagline">Grown from scratch. 2026.</div>
+                </div>
+                <ul class="footer-links">
+                    <li><a href="https://github.com/ShaeOJ/Undergroundroots" target="_blank" rel="noopener">GitHub</a></li>
+                    <li><a href="/field-notes/">Field Notes</a></li>
+                    <li><a href="/workshop/">Workshop</a></li>
+                    <li><a href="/#stack">Stack</a></li>
+                </ul>
+            </div>
+        </div>
+    </footer>
+
+</div>
+<script src="../assets/js/roots.js"></script>
+<script src="../assets/js/main.js"></script>
+</body>
+</html>

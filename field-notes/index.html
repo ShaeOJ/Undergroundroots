@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Field Notes — Undergroundroots</title>
+    <meta name="description" content="Project logs, build diaries, and dispatches from the workshop.">
+    <link rel="stylesheet" href="../assets/css/style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=Lora:ital,wght@0,400;0,600;1,400&family=Space+Mono:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+</head>
+<body>
+<canvas id="root-canvas" aria-hidden="true"></canvas>
+<div class="site-wrap">
+
+    <nav class="site-nav" aria-label="Main navigation">
+        <a href="/" class="nav-logo">Under<span>ground</span>roots</a>
+        <ul class="nav-links">
+            <li><a href="/field-notes/">Field Notes</a></li>
+            <li><a href="/workshop/">Workshop</a></li>
+            <li><a href="/#craft">The Craft</a></li>
+            <li><a href="/#stack">The Stack</a></li>
+            <li><a href="/#compost">About</a></li>
+        </ul>
+    </nav>
+
+    <section class="page-hero">
+        <div class="container">
+            <span class="section-label">Field Notes</span>
+            <h1 class="page-title">Dispatches from the Workshop</h1>
+            <p class="page-lead">Build logs, post-mortems, and deep dives into every project. Written while the solder is still warm.</p>
+        </div>
+    </section>
+
+    <hr class="ink-divider">
+
+    <section class="page-body">
+        <div class="container">
+            <div class="notes-grid">
+
+                <article class="note-card reveal">
+                    <span class="note-tag">ASIC / Firmware</span>
+                    <h3 class="note-title">ZombieOS — Wringing Every Last Hash from a Retired S9</h3>
+                    <p class="note-excerpt">
+                        A single-board Antminer S9, a custom Braiins OS overlay, and per-chip
+                        voltage autotuning. Stage 4 complete at 7.942 V, 29 iterations, 0 slow chips.
+                        Then we rebuilt the entire UI from scratch.
+                    </p>
+                    <div class="note-footer">
+                        <span class="note-date">2026-06-01</span>
+                        <a href="/field-notes/zombieos.html" class="note-read-more">Read →</a>
+                    </div>
+                </article>
+
+                <article class="note-card reveal">
+                    <span class="note-tag">ESP32 / Cluster</span>
+                    <h3 class="note-title">ClusterAxe — One Master, Eight Slaves, No Router Required</h3>
+                    <p class="note-excerpt">
+                        ESP-NOW peer mesh over a NerdQAxe++ master and up to 8 ZombieOS BitAxe
+                        slaves. Self-healing registration, nonce-space partitioning, and the fixes
+                        it took to keep all 8 nodes alive at once.
+                    </p>
+                    <div class="note-footer">
+                        <span class="note-date">2026-05-26</span>
+                        <a href="/field-notes/clusteraxe.html" class="note-read-more">Read →</a>
+                    </div>
+                </article>
+
+                <article class="note-card reveal">
+                    <span class="note-tag">Go / Stratum</span>
+                    <h3 class="note-title">GoVault — Building a Solo Mining Server From the Ground Up</h3>
+                    <p class="note-excerpt">
+                        A full Stratum V1 server in Go — desktop app, headless edge node, and
+                        admin panel in one repo. Solo mode talks directly to your own node.
+                        No pool operator. No fees.
+                    </p>
+                    <div class="note-footer">
+                        <span class="note-date">2026-04-23</span>
+                        <a href="/field-notes/govault.html" class="note-read-more">Read →</a>
+                    </div>
+                </article>
+
+            </div>
+        </div>
+    </section>
+
+    <hr class="ink-divider">
+    <footer class="site-footer">
+        <div class="container">
+            <div class="footer-inner">
+                <div>
+                    <div class="footer-logo">Undergroundroots</div>
+                    <div class="footer-tagline">Grown from scratch. 2026.</div>
+                </div>
+                <ul class="footer-links">
+                    <li><a href="https://github.com/ShaeOJ/Undergroundroots" target="_blank" rel="noopener">GitHub</a></li>
+                    <li><a href="/field-notes/">Field Notes</a></li>
+                    <li><a href="/workshop/">Workshop</a></li>
+                    <li><a href="/#stack">Stack</a></li>
+                </ul>
+            </div>
+        </div>
+    </footer>
+
+</div>
+<script src="../assets/js/roots.js"></script>
+<script src="../assets/js/main.js"></script>
+</body>
+</html>

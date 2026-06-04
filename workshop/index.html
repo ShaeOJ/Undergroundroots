@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Workshop — Undergroundroots</title>
+    <meta name="description" content="Every active project — firmware, infrastructure, tools, and hardware builds.">
+    <link rel="stylesheet" href="../assets/css/style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=Lora:ital,wght@0,400;0,600;1,400&family=Space+Mono:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+</head>
+<body>
+<canvas id="root-canvas" aria-hidden="true"></canvas>
+<div class="site-wrap">
+
+    <nav class="site-nav" aria-label="Main navigation">
+        <a href="/" class="nav-logo">Under<span>ground</span>roots</a>
+        <ul class="nav-links">
+            <li><a href="/field-notes/">Field Notes</a></li>
+            <li><a href="/workshop/">Workshop</a></li>
+            <li><a href="/#craft">The Craft</a></li>
+            <li><a href="/#stack">The Stack</a></li>
+            <li><a href="/#compost">About</a></li>
+        </ul>
+    </nav>
+
+    <section class="page-hero">
+        <div class="container">
+            <span class="section-label">Workshop</span>
+            <h1 class="page-title">Active Projects</h1>
+            <p class="page-lead">Every build currently in flight — firmware, infrastructure, hardware, and tools. All open. All real.</p>
+        </div>
+    </section>
+
+    <hr class="ink-divider">
+
+    <section class="page-body">
+        <div class="container">
+
+            <div class="workshop-list">
+
+                <div class="workshop-entry reveal">
+                    <div class="workshop-entry-header">
+                        <div>
+                            <span class="note-tag">ASIC / Firmware</span>
+                            <h2 class="workshop-entry-title">ZombieOS</h2>
+                            <p class="workshop-entry-sub">Custom Braiins OS overlay for Antminer S9 — per-chip voltage autotuning, Vault-Tec UI, WebGL dashboard globe.</p>
+                        </div>
+                        <div class="workshop-entry-stats">
+                            <div class="workshop-stat">
+                                <span class="workshop-stat-label">Hardware</span>
+                                <span class="workshop-stat-value">Antminer S9</span>
+                            </div>
+                            <div class="workshop-stat">
+                                <span class="workshop-stat-label">Tune Voltage</span>
+                                <span class="workshop-stat-value">7.942 V</span>
+                            </div>
+                            <div class="workshop-stat">
+                                <span class="workshop-stat-label">Slow Chips</span>
+                                <span class="workshop-stat-value">0 / 63</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="workshop-entry-links">
+                        <a href="/field-notes/zombieos.html" class="workshop-link">Read the build log →</a>
+                        <a href="https://github.com/ShaeOJ/Zombie-Braiins-" class="workshop-link" target="_blank" rel="noopener">GitHub ↗</a>
+                    </div>
+                </div>
+
+                <hr class="ink-divider">
+
+                <div class="workshop-entry reveal">
+                    <div class="workshop-entry-header">
+                        <div>
+                            <span class="note-tag">ESP32 / Cluster</span>
+                            <h2 class="workshop-entry-title">ClusterAxe</h2>
+                            <p class="workshop-entry-sub">ESP-NOW wireless cluster firmware — NerdQAxe++ master, up to 8 ZombieOS BitAxe slaves, self-healing registration, nonce partitioning.</p>
+                        </div>
+                        <div class="workshop-entry-stats">
+                            <div class="workshop-stat">
+                                <span class="workshop-stat-label">Transport</span>
+                                <span class="workshop-stat-value">ESP-NOW</span>
+                            </div>
+                            <div class="workshop-stat">
+                                <span class="workshop-stat-label">Max Nodes</span>
+                                <span class="workshop-stat-value">9</span>
+                            </div>
+                            <div class="workshop-stat">
+                                <span class="workshop-stat-label">Chip</span>
+                                <span class="workshop-stat-value">BM1370</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="workshop-entry-links">
+                        <a href="/field-notes/clusteraxe.html" class="workshop-link">Read the build log →</a>
+                        <a href="https://github.com/ShaeOJ/NerdAxe_Cluster" class="workshop-link" target="_blank" rel="noopener">GitHub ↗</a>
+                    </div>
+                </div>
+
+                <hr class="ink-divider">
+
+                <div class="workshop-entry reveal">
+                    <div class="workshop-entry-header">
+                        <div>
+                            <span class="note-tag">Go / Stratum</span>
+                            <h2 class="workshop-entry-title">GoVault</h2>
+                            <p class="workshop-entry-sub">Native desktop Stratum V1 server in Go — solo mode, proxy mode, edge node, admin panel. Six UI themes. No pool fees.</p>
+                        </div>
+                        <div class="workshop-entry-stats">
+                            <div class="workshop-stat">
+                                <span class="workshop-stat-label">Stack</span>
+                                <span class="workshop-stat-value">Go + Wails + Svelte</span>
+                            </div>
+                            <div class="workshop-stat">
+                                <span class="workshop-stat-label">Coins</span>
+                                <span class="workshop-stat-value">BTC BCH DGB XEC BC2</span>
+                            </div>
+                            <div class="workshop-stat">
+                                <span class="workshop-stat-label">Version</span>
+                                <span class="workshop-stat-value">v0.2.0-beta.5</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="workshop-entry-links">
+                        <a href="/field-notes/govault.html" class="workshop-link">Read the build log →</a>
+                        <a href="https://github.com/ShaeOJ/GoVault" class="workshop-link" target="_blank" rel="noopener">GitHub ↗</a>
+                    </div>
+                </div>
+
+                <hr class="ink-divider">
+
+                <div class="workshop-entry reveal">
+                    <div class="workshop-entry-header">
+                        <div>
+                            <span class="note-tag">Pool Infrastructure</span>
+                            <h2 class="workshop-entry-title">FirePool</h2>
+                            <p class="workshop-entry-sub">Multi-coin mining pool across 3 servers (home + EU VPS + North VPS). Custom Miningcore fork, partitioned PostgreSQL, Vault-Tec frontend, WireGuard mesh.</p>
+                        </div>
+                        <div class="workshop-entry-stats">
+                            <div class="workshop-stat">
+                                <span class="workshop-stat-label">Servers</span>
+                                <span class="workshop-stat-value">3</span>
+                            </div>
+                            <div class="workshop-stat">
+                                <span class="workshop-stat-label">Coins</span>
+                                <span class="workshop-stat-value">BTC BCH DGB LTC + more</span>
+                            </div>
+                            <div class="workshop-stat">
+                                <span class="workshop-stat-label">Backend</span>
+                                <span class="workshop-stat-value">Miningcore + Go</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="workshop-entry-links">
+                        <a href="https://firepool.ca" class="workshop-link" target="_blank" rel="noopener">firepool.ca ↗</a>
+                        <a href="https://github.com/ShaeOJ/FirePool2" class="workshop-link" target="_blank" rel="noopener">FirePool2 (Go rewrite) ↗</a>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <hr class="ink-divider">
+    <footer class="site-footer">
+        <div class="container">
+            <div class="footer-inner">
+                <div>
+                    <div class="footer-logo">Undergroundroots</div>
+                    <div class="footer-tagline">Grown from scratch. 2026.</div>
+                </div>
+                <ul class="footer-links">
+                    <li><a href="https://github.com/ShaeOJ/Undergroundroots" target="_blank" rel="noopener">GitHub</a></li>
+                    <li><a href="/field-notes/">Field Notes</a></li>
+                    <li><a href="/workshop/">Workshop</a></li>
+                    <li><a href="/#stack">Stack</a></li>
+                </ul>
+            </div>
+        </div>
+    </footer>
+
+</div>
+<script src="../assets/js/roots.js"></script>
+<script src="../assets/js/main.js"></script>
+</body>
+</html>
